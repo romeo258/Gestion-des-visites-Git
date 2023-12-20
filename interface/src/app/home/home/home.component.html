@@ -1,0 +1,108 @@
+<!-- ***************** Cartes pour statistiques ********************** -->
+
+<div class="card--container">
+    <h3 class="main--title"> Periods's data
+        <!-- Exemple de menu déroulant pour la sélection de la période -->
+        <select style="font-weight: bold;" [(ngModel)]="selectedPeriod" (change)="updateStatistics()">
+          <option value="all" style="font-weight: bold;">All</option>
+          <option value="day" style="font-weight: bold;">Day</option>
+          <option value="week" style="font-weight: bold;">Week</option>
+          <option value="month" style="font-weight: bold;">Month</option>
+        </select>
+    </h3>
+    <div class="card--wrapper">
+      <div class="payment--card light-red">
+
+        <div class="card--header light-red">
+          <div class="amount">
+            <span class="title"> Total Visits </span>
+            <span class="amount--value">{{visitCount}}</span>
+          </div>
+          <i class="fas fa-list icon
+                dark-red"></i>
+        </div>
+        <span class="card-detail">**** **** **** 3484</span>
+      </div>
+
+      <div class="payment--card light-purple">
+        <div class="card--header">
+          <div class="amount">
+            <span class="title"> Total Visits </span>
+            <span class="amount--value">{{visitCount}}</span>
+          </div>
+          <i class="fas fa-list icon
+              dark-purple"></i>
+        </div>
+        <span class="card-detail">**** **** **** 5542</span>
+      </div>
+
+      <div class="payment--card light-green">
+        <div class="card--header">
+          <div class="amount">
+            <span class="title"> Total Visitors </span>
+            <span class="amount--value">{{ visitorCount }}</span>
+          </div>
+          <i class="fas fa-users icon
+              dark-green"></i>
+        </div>
+        <span class="card-detail">**** **** **** 8896</span>
+      </div>
+
+      <div class="payment--card light-blue">
+        <div class="card--header">
+          <div class="amount">
+            <span class="title"> Total Visitors </span>
+            <span class="amount--value">{{ visitorCount }}</span>
+          </div>
+          <i class="fas fa-users icon
+              dark-blue"></i>
+        </div>
+        <span class="card-detail">**** **** **** 7745</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ************************** Tableau des rendez-vous ***************************** -->
+<div class="tabular--wrapper">
+  <h3 class="main--title">Visite(s) en attentes</h3>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Purpose</th>
+          <th>Date</th>
+          <th>Departure Date</th>
+          <th>Visitor</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visit of getVisibleVisits()">
+          <td class="bold-text">{{visit.purpose}}</td>
+          <td class="bold-text">{{visit.date}}</td>
+          <td class="bold-text">{{visit.departureDate}}</td>
+          <td class="bold-text">{{visit.visitor.firstName}} {{visit.visitor.lastName}}</td>
+          <td><i>loading...</i></td>
+          <td>
+            <span class="material-icons bg-success text-white p-2 rounded-pill btn-info" 
+                  style="cursor: pointer;">edit</span>
+            <span class="material-icons bg-primary text-white p-2 rounded-pill btn-info ms-2" 
+                  style="cursor: pointer;">visibility</span>
+            <span class="material-icons bg-danger text-white p-2 rounded-pill btn-info ms-2" 
+                  style="cursor: pointer;">delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Ajout de la pagination avec les nouveaux styles -->
+    <ul class="pagination">
+      <li class="page-item" *ngFor="let page of getPages()" (click)="onPageChange(page)">
+        <a class="page-link" style="cursor: pointer;">{{ page }}</a>
+      </li>
+    </ul>
+
+  </div>
+</div>

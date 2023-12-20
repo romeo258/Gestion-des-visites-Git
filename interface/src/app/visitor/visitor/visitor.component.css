@@ -1,0 +1,44 @@
+body {
+    margin-top: 20px;
+    background-color: #f5f5f5;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    margin-bottom: 30px;
+    margin-left: 0px;
+}
+
+.w-60 {
+    width: 60px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.social-links li a {
+    border-radius: 50%;
+    background-color: rgba(89, 206, 181, .85);
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+    font-size: 12px;
+}
+
+a {
+    color: #707070;
+}
+
+
+/* *************blur of background********************* */
+.blur .container {
+    filter: blur(1.5px) brightness(0.8);
+    transition: filter 0.3s ease-in-out;
+}
+

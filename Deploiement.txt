@@ -1,0 +1,69 @@
+
+******Processus de deploiement de l'application de gestion des visites*********
+-------------------------------------------------------------------------------
+
+          ****************************Hebergeur: AMAZON AWS*************************
+			******************************************************
+			*    //Spring Boot 3.2.0, Angular 16, Bootstrap 5    *
+			*    // Java 17				             *
+			*    // Typescript, HTML 5, CSS 3		     *
+			*    // MySQL					     *
+			******************************************************
+
+			***************************
+			* Deploiement du back end *
+			***************************
+
+Etape 1: Gerer la base de donnees
+***creer la base de donnees dans votre plate forme amazon RDS
+	type, username, password...
+
+***modifier l'adresse de loopback ou "localhost" 
+	par le endpoint de votre base de donnees sur RDS.
+
+***Modifier le port de connexion si necessaire.
+
+Etape 2: Impoter notre fichier .jar dans Elastic Beanstalk
+***creer un nouvel environnement dans Elastic Beanstalk
+
+***definir un en nom de domaine en cas de besoin
+
+***choisir comme plateform "java",
+		 platform Branch "la version de java"
+		 platform version "choisir celle qui va avec"
+
+***lancez le build du projet avec maven install
+
+***Impoter le fichier .jar se trouvent dans le dossier target 
+	de notre backend dans upload deploy et definir la version
+
+***Lancer le deploiement 
+
+
+			****************************
+			* Deploiement du front end *
+			****************************
+
+Etape 1: Modifier l'adresse du backend dans notre font end
+***Dans l'interface web, modifier la valeur de l'adresse du back-end 
+	avec celui en ligne a fin de rendre operationnel nos services
+
+***Lancer le build de notre frond end avec ng build
+
+Etape 2: Deploement de notre front end avec S3
+***Creation d'un nouveau bucket
+	definir le nom
+	desactiver "Block all public access
+
+***choisir le bucket et importer tout les fichiers pour notre front end
+	se trouvent dans e fichier dist/.../
+
+***dans Bukets/Properties editer static website hosting (enable)
+
+***definir la page index de notre application web
+
+***dans static web hosting, copier l'URL qui s'y trouve de passer dans votre navigateur pour s'assurer que 
+	l'application est en ligne
+***effectuer des test pour s'assurer que tout fonctionne bien
+
+

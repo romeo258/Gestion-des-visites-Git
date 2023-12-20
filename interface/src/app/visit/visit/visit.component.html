@@ -1,0 +1,172 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<div class="container" [ngClass]="{'blur': blurPage, 'container': true}">
+    <div class="container" id="main-container" [ngClass]="{'blur': blurPage, 'container': true}">
+
+        <!-- ********** consommation du filtre*********** -->
+            <div class="my-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="filter"><b>Using Filter: </b></span>
+                        
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input type="search" (ngModelChange)="searchVisits(key.value)" #key="ngModel" ngModel
+                        name="key" id="searchName" class="form-control" placeholder="typing..." required>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- Afficher les les carte pour visites -->
+            <div class="row row-cols-1 row-cols-md-4">
+                <div class="col" *ngFor="let visit of visits">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{visit.purpose}}</h5>
+                            
+                            <div class="mb-2">
+                                <span class="fw-bold">Date : <span class="card-text date-style">{{visit.date | date:'dd/MM/yyyy'}}</span></span>
+                                
+                            </div>
+
+                            <div class="mb-2">
+                                <span class="fw-bold">Départ : <span class="card-text departure-style">{{visit.departureDate}}</span></span>
+                                
+                            </div>
+                            <hr>
+                            <span class="btn btn-primary d-flex justify-content-center custom-btn">
+                                <i class="fa fa-user text-black"></i> {{visit.visitor.firstName}} {{visit.visitor.lastName}}
+                            </span>
+                            
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                <a (click)="onOpenModal(visit, 'edit')" class="btn btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-pencil text-white"></i></a>
+                                <a (click)="onOpenModal(visit, 'delete')" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="fa fa-times text-white"></i></a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <!-- boutton d'ajoute pour visiteur -->
+    <a class="nav-link" (click)="onOpenModal(null, 'add')"> 
+        <span class="material-icons bg-danger text-white p-2 rounded-pill btn-info position-fixed bottom-0 end-0 mb-4 me-4" 
+              style="z-index: 1000; cursor: pointer; font-size: 24px;">
+                 add
+        </span>
+    </a>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Add visit Modal -->
+    <div class="modal fade" id="addVisitModal" tabindex="-1" role="dialog" aria-labelledby="addVisitModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="addVisitModalLabel">Add Visit</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseModal()">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+              </div>
+              <div class="modal-body">
+                 <form #addForm="ngForm" (ngSubmit)="onAddVisit(addForm)">
+                 <div class="form-group">
+                    <label for="purpose">Purpose</label>
+                    <input type="text" ngModel name="purpose" class="form-control" id="purpose" placeholder="Purpose" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="departureDate">Depart</label>
+                    <input type="time" ngModel name="departureDate" class="form-control" id="departureDate" placeholder="Departure Date" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="visitor">Visitor</label>
+                    <select ngModel name="visitor" class="form-control" id="visitor" required>
+                        <option value="" disabled selected>Select a visitor</option>
+                        <option *ngFor="let visitor of visitors" [ngValue]="visitor">{{visitor.firstName}} {{visitor.lastName}}</option>
+                    </select>
+                </div>
+                
+                 <div class="modal-footer">
+                    <button type="button" id="add-visit-form" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseModal()">Close</button>
+                    <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" (click)="onCloseModal()">Save</button>
+                 </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+    </div>
+
+    <!-- Edit visit Modal -->
+    <div class="modal fade" id="updateVisitModal" tabindex="-1" role="dialog" aria-labelledby="VisitEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="updateVisitModalLabel">Edit {{editVisit?.purpose}} for {{editVisit?.visitor?.firstName}} {{editVisit?.visitor?.lastName}}</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseModal()">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+              </div>
+              <div class="modal-body">
+                 <form #editForm="ngForm">
+                    <div class="form-group">
+                        <label for="purpose">Purpose</label>
+                        <input type="text" ngModel="{{editVisit?.purpose}}" name="purpose" class="form-control" id="purpose" aria-describedby="purposeHelp" placeholder="Purpose">
+                    </div>
+                    <input type="hidden" ngModel="{{editVisit?.visitCode}}" name="visitCode" class="form-control" id="visitCode" placeholder="Purpose">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" ngModel="{{editVisit?.date}}" name="date" class="form-control" id="date" placeholder="Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="departureDate">Depart</label>
+                        <input type="time" ngModel="{{editVisit?.departureDate}}" name="departureDate" class="form-control" id="departureDate" placeholder="Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitor">Visitor</label>
+                        <select [ngModel]="editVisit?.visitor?.lastName" name="visitor" class="form-control" id="visitor">
+                            <option *ngFor="let visitor of visitors" [ngValue]="visitor">{{visitor.firstName}} {{visitor.lastName}}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" (click)="onCloseModal()">Close</button>
+                        <button (click)="onUpdateVisit(editForm.value)" data-dismiss="modal" class="btn btn-primary" (click)="onCloseModal()">Save changes</button>
+                    </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+    </div>
+
+    <!-- Delete Visite Modal -->
+    <div class="modal fade" id="deleteVisitModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="deleteModelLabel">Delete Visit</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseModal()">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+              </div>
+              <div class="modal-body ">
+                    <p class="align-self-center">Are you sure you want to delete 
+                        <b class="text-primary">{{deleteVisit?.purpose}}</b> for 
+                        <b>{{deleteVisit?.visitor?.firstName}} {{deleteVisit?.visitor?.lastName}}</b> ?
+                    </p>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseModal()">No</button>
+                    <button (click)="onDeleteVisit(deleteVisit?.visitCode)" class="btn btn-danger" data-dismiss="modal" (click)="onCloseModal()">Yes</button>
+                 </div>
+              </div>
+           </div>
+        </div>
+    </div>
+</div>

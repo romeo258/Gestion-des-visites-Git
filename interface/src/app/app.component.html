@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="UTF-8"/>
+    <title>Gestion des visites</title>
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+   <div class="sidebar">
+      <div class="logo"></div>
+      <ul class="menu">
+        <li routerLinkActive="active">
+          <a routerLink="/home" (click)="updateTitle('Dashboard')">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li routerLinkActive="active" (click)="updateTitle('Manage Visitors')">
+          <a routerLink="/visitor">
+            <i class="fas fa-user"></i>
+            <span>Visitor</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/visit" (click)="updateTitle('Manage Visits')">
+            <i class="fas fa-chart-bar"></i>
+            <span>Visits</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a href="#">
+            <i class="fas fa-briefcase"></i>
+            <span>Careers</span>
+          </a>
+        </li>
+        <li>
+          <a routerLinkActive="active">
+            <i class="fas fa-question-circle"></i>
+            <span>FAQ</span>
+          </a>
+        </li>
+        <li>
+          <a routerLinkActive="active">
+            <i class="fas fa-star"></i>
+            <span>Testimonials</span>
+          </a>
+        </li>
+        <li>
+          <a routerLinkActive="active">
+            <i class="fas fa-cog"></i>
+            <span>Setting</span>
+          </a>
+        </li>
+        <li routerLinkActive="active" class="logout">
+          <a href="#">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ************************ en tete du corps ************************* -->
+    <div class="main--content">
+      <div class="header--wrapper">
+        <!-- Ajout du bouton pour dérouler le menu sur mobile -->
+        <!-- <div class="menu-toggle" (click)="toggleMenu()">
+          <i class="material-icons">menu</i>
+        </div> -->
+        <div class="header--title">
+          <span><h2>{{title}}</h2></span>
+        </div>
+        <div class="user--info">
+          <div class="search--box">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search"/>
+          </div>
+          <img src="favicon.ico" alt=""> 
+        </div>
+      </div>
+
+      
+      <!-- ********************** Declaration des composantes *********************** -->
+      <router-outlet>
+        
+      </router-outlet>
+    </div>
+  </body>
+</html>

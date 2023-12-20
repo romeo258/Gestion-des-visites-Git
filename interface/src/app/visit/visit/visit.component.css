@@ -1,0 +1,45 @@
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out; /* Ajoutez une transition à la propriété transform */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Déplacez la carte vers le haut de 5 pixels lors du survol */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    color: #4A4A4A;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #7C7C7C;
+}
+
+.btn-primary {
+    background-color: #1D7CA3;
+    border-color: #1D7CA3;
+}
+
+.btn-primary:hover {
+    background-color: #176787;
+    border-color: #176787;
+}
+
+.custom-btn {
+    display: flex;
+    align-items: center;
+}
+
+.custom-btn i {
+    margin-right: 8px; /* Ajustez cette valeur selon vos préférences pour l'espace entre l'icône et le texte */
+}
+
+/* *************blur of background********************* */
+.blur .container {
+    filter: blur(1.5px) brightness(0.8);
+    transition: filter 0.3s ease-in-out;
+}
